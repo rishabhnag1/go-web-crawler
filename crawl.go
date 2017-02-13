@@ -6,6 +6,7 @@ import (
 	"net/http" //to retrieve page
 	"flag"
 	"os"
+	"crypto/tls"
 	"golang.org/x/net/html"
 	"strings"
 )
@@ -53,7 +54,17 @@ func crawlURL(base string, process chan string, complete chan bool){
 func navigate(base string, url string, process chan string){
 	fmt.Println(url)
 
-	resp, err := http.Get(url)
+	tlsConfig := &tls.Config{
+		InsecureSkipVerify: true,
+	}
+
+	transport := &http.Transport{
+		TLSClientConfig: tlsConfig,
+	}
+
+	client := http.Client{Transport: transport}
+
+	resp, err := client.Get(base)
 
 	if err != nil{
 		fmt.Println(err)
