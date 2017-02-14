@@ -1,7 +1,6 @@
 "use strict"
 let request = require('request');
 let cheerio = require('cheerio');
-let URL = require('url-parse');
 
 let parser = require('./parse');
 
